@@ -4,6 +4,8 @@ use React\Http\Response;
 use React\Http\Server;
 use React\MySQL\Factory;
 use Psr\Http\Message\ServerRequestInterface;
+use \RestfulAPI\Controller\ListUsers;
+use \RestfulAPI\Users;
 
 require './vendor/autoload.php';
 
@@ -12,53 +14,11 @@ $loop = \React\EventLoop\Factory::create();
 $factory = new Factory($loop);
 $db = $factory->createLazyConnection('root:mysql@localhost/restful');
 
-$hello = function () {
-    return new Response(
-        200,
-        ['Content-Type' => 'text/plain'],
-        'Hello' . PHP_EOL
-    );
-};
-
-$listUsers = function () use ($db) {
-    return $db
-        ->query('
-            SELECT id, name, email
-            FROM users
-            ORDER BY id
-        ')
-        ->then(function (\React\MySQL\QueryResult $queryResult) {
-            $users = json_encode($queryResult->resultRows);
-            return new Response(
-                200,
-                ['Content-Type' => 'application/json'],
-                $users
-            );
-        });
-};
-
-$createUser = function (ServerRequestInterface $request) use ($db) {
-    $user = json_decode((string) $request->getBody(), true);
-    return $db
-        ->query('INSERT INTO users(name, email) VALUES (?, ?)', $user)
-        ->then(
-            function () {
-                return new Response(201);
-            },
-            function (Exception $error) {
-                return new Response(
-                    400,
-                    ['Content-Type' => 'application/json'],
-                    json_encode(['error' => $error->getMessage()])
-                );
-            }
-        );
-};
+$users = new Users($db);
 
 $dispatcher = FastRoute\simpleDispatcher(
-    function (FastRoute\RouteCollector $routes) use ($listUsers, $createUser) {
-        $routes->addRoute('GET', '/users', $listUsers);
-        $routes->addRoute('POST', '/users', $createUser);
+    function (FastRoute\RouteCollector $routes) use ($users) {
+        $routes->addRoute('GET', '/users', new ListUsers($users));
     }
 );
 
