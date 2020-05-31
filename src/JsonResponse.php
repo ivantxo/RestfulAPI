@@ -20,4 +20,14 @@ final class JsonResponse extends Response
     {
         return new self(200, $data);
     }
+
+    public static function created(): self
+    {
+        return new self(201);
+    }
+
+    public static function badRequest(string $error): self
+    {
+        return new self(400, ['error' => $error]);
+    }
 }

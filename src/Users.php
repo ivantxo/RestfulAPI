@@ -23,4 +23,13 @@ final class Users
                 return $queryResult->resultRows;
             });
     }
+
+    public function create(string $name, string $email): PromiseInterface
+    {
+        return $this->db
+            ->query(
+                'INSERT INTO users(name, email) VALUES(?, ?)',
+                [$name, $email]
+            );
+    }
 }

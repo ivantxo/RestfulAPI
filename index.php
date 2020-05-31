@@ -5,6 +5,7 @@ use React\Http\Server;
 use React\MySQL\Factory;
 use Psr\Http\Message\ServerRequestInterface;
 use \RestfulAPI\Controller\ListUsers;
+use \RestfulAPI\Controller\CreateUser;
 use \RestfulAPI\Users;
 
 require './vendor/autoload.php';
@@ -19,6 +20,7 @@ $users = new Users($db);
 $dispatcher = FastRoute\simpleDispatcher(
     function (FastRoute\RouteCollector $routes) use ($users) {
         $routes->addRoute('GET', '/users', new ListUsers($users));
+        $routes->addRoute('POST', '/users', new CreateUser($users));
     }
 );
 
