@@ -2,9 +2,9 @@
 
 namespace RestfulAPI\Controller;
 
+use RestfulAPI\JsonResponse;
 use RestfulAPI\Users;
 use Psr\Http\Message\ServerRequestInterface;
-use React\Http\Response;
 
 final class ListUsers
 {
@@ -19,11 +19,7 @@ final class ListUsers
     {
         return $this->users->all()
             ->then(function (array $users) {
-                return new Response(
-                    200,
-                    ['Content-Type' => 'application/json'],
-                    $users
-                );
+                return JsonResponse::ok($users);
             });
     }
 }
