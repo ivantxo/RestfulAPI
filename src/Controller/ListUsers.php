@@ -2,26 +2,23 @@
 
 namespace RestfulAPI\Controller;
 
+use RestfulAPI\Users;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Response;
-use React\MySQL\ConnectionInterface;
-use React\MySQL\QueryResult;
 
 final class ListUsers
 {
-    private $db;
+    private $users;
 
-    public function __construct(ConnectionInterface $db)
+    public function __construct(Users $users)
     {
-        $this->db = $db;
+        $this->users = $users;
     }
 
     public function __invoke(ServerRequestInterface $request)
     {
-        return $this->db
-            ->query('SELECT id, name FROM users ORDER BY id')
-            ->then(function (QueryResult $queryResult) {
-                $users = json_encode($queryResult->resultRows);
+        return $this->users->all()
+            ->then(function (array $users) {
                 return new Response(
                     200,
                     ['Content-Type' => 'application/json'],
