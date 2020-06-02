@@ -6,6 +6,9 @@ use React\MySQL\Factory;
 use Psr\Http\Message\ServerRequestInterface;
 use \RestfulAPI\Controller\ListUsers;
 use \RestfulAPI\Controller\CreateUser;
+use \RestfulAPI\Controller\ViewUser;
+use \RestfulAPI\Controller\UpdateUser;
+use \RestfulAPI\Controller\DeleteUser;
 use \RestfulAPI\Users;
 
 require './vendor/autoload.php';
@@ -21,6 +24,9 @@ $dispatcher = FastRoute\simpleDispatcher(
     function (FastRoute\RouteCollector $routes) use ($users) {
         $routes->addRoute('GET', '/users', new ListUsers($users));
         $routes->addRoute('POST', '/users', new CreateUser($users));
+        $routes->addRoute('GET', '/users/{id:\d+}', new ViewUser($users));
+        $routes->addRoute('PUT', '/users/{id:\d+}', new UpdateUser($users));
+        $routes->addRoute('DELETE', '/users/{id:\d+}', new DeleteUser($users));
     }
 );
 
@@ -45,7 +51,8 @@ $server = new Server(
                 );
 
             case FastRoute\Dispatcher::FOUND:
-                return $routeInfo[1]($request);
+                $params = $routeInfo[2];
+                return $routeInfo[1]($request, array_values($params));
         }
         throw new LogicException('Something went wrong in routing.');
     }
