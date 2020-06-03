@@ -24,15 +24,6 @@ final class Users
             });
     }
 
-    public function create(string $name, string $email): PromiseInterface
-    {
-        return $this->db
-            ->query(
-                'INSERT INTO users(name, email) VALUES(?, ?)',
-                [$name, $email]
-            );
-    }
-
     public function find(string $id): PromiseInterface
     {
         return $this->db
@@ -71,5 +62,14 @@ final class Users
                     throw new UserNotFoundError();
                 }
             });
+    }
+
+    public function create(string $name, string $email): PromiseInterface
+    {
+        return $this->db
+            ->query(
+                'INSERT INTO users(name, email) VALUES(?, ?)',
+                [$name, $email]
+            );
     }
 }

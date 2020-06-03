@@ -21,7 +21,7 @@ final class ViewUser
         return $this->users->find($id)
             ->then(
                 function (array $user) {
-                    JsonResponse::ok($user);
+                    return JsonResponse::ok($user);
                 },
                 function (UserNotFoundError $error) {
                     return JsonResponse::notFound($error->getMessage());

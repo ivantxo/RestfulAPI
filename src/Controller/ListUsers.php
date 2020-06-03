@@ -18,8 +18,10 @@ final class ListUsers
     public function __invoke(ServerRequestInterface $request)
     {
         return $this->users->all()
-            ->then(function (array $users) {
-                return JsonResponse::ok($users);
-            });
+            ->then(
+                function (array $users) {
+                    return JsonResponse::ok($users);
+                }
+            );
     }
 }

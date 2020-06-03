@@ -16,7 +16,7 @@ final class DeleteUser
         $this->users = $users;
     }
 
-    public function __invoke(ServerRequestInterface $request, $id)
+    public function __invoke(ServerRequestInterface $request, string $id)
     {
         return $this->users->delete($id)
             ->then(
