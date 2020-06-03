@@ -1,15 +1,16 @@
 <?php
 
-use \RestfulAPI\Controller\ListUsers;
-use \RestfulAPI\Controller\CreateUser;
-use \RestfulAPI\Controller\ViewUser;
-use \RestfulAPI\Controller\UpdateUser;
-use \RestfulAPI\Controller\DeleteUser;
-use \RestfulAPI\Router;
-use \RestfulAPI\Users;
-use \FastRoute\DataGenerator\GroupCountBased;
-use \FastRoute\RouteCollector;
-use \FastRoute\RouteParser\Std;
+use RestfulAPI\Auth;
+use RestfulAPI\Controller\ListUsers;
+use RestfulAPI\Controller\CreateUser;
+use RestfulAPI\Controller\ViewUser;
+use RestfulAPI\Controller\UpdateUser;
+use RestfulAPI\Controller\DeleteUser;
+use RestfulAPI\Router;
+use RestfulAPI\Users;
+use FastRoute\DataGenerator\GroupCountBased;
+use FastRoute\RouteCollector;
+use FastRoute\RouteParser\Std;
 use React\Http\Server;
 use React\MySQL\Factory;
 
@@ -27,7 +28,10 @@ $routes->get('/users/{id}', new ViewUser($users));
 $routes->put('/users/{id}', new UpdateUser($users));
 $routes->delete('/users/{id}', new DeleteUser($users));
 
-$server = new Server(new Router($routes));
+$server = new Server([
+    new Auth($loop, ['user' => 'secret']),
+    new Router($routes),
+]);
 $socket = new \React\Socket\Server('127.0.0.1:8000', $loop);
 $server->listen($socket);
 
