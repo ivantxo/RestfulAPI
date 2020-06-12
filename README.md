@@ -10,3 +10,8 @@ In this small project I have built a small RESTful API with authentication using
 $ composer update
 $ php index.php
 ```
+
+## Requisites
+* PHP 7
+* MySQL
+* Composer
