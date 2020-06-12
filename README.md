@@ -4,6 +4,19 @@ In this small project I have built a small RESTful API with authentication using
 
 [ReactPHP](https://reactphp.org/)
 
+## What you will need
+Create a MySQL database
+
+```mysql
+CREATE TABLE `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_uindex` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+```
+
 ## Usage
 
 ```bash
