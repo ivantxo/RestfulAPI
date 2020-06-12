@@ -1,5 +1,17 @@
 # RestfulAPI
 
-In this small project I build a small RESTful API using ReactPHP, which is a library that allows to do Asynchronous programming with PHP
+In this small project I have built a small RESTful API with authentication using ReactPHP. ReactPHP is a library that allows to do Asynchronous programming with PHP or non-blocking PHP.
 
-https://reactphp.org/
+[ReactPHP](https://reactphp.org/)
+
+## Usage
+
+```bash
+$ composer update
+$ php index.php
+```
+
+## Requisites
+* PHP 7
+* MySQL
+* Composer
