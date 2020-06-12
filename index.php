@@ -18,7 +18,7 @@ require './vendor/autoload.php';
 
 $loop = \React\EventLoop\Factory::create();
 $factory = new Factory($loop);
-$db = $factory->createLazyConnection('root:mysql@localhost/restful');
+$db = $factory->createLazyConnection('root:<password>@localhost/restful');
 $users = new Users($db);
 
 $routes = new RouteCollector(new Std(), new GroupCountBased());
