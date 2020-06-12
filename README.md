@@ -21,14 +21,14 @@ Insert some users
 
 On `index.php` update the MySQL connection credentials
 
-Play with the Postman collection
-
 ## Usage
 
 ```bash
 $ composer update
 $ php index.php
 ```
+
+Play with the Postman collection
 
 ## Requisites
 * PHP 7
