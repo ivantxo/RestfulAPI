@@ -17,6 +17,12 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 ```
 
+Insert some users
+
+On `index.php` update the MySQL connection credentials
+
+Play with the Postman collection
+
 ## Usage
 
 ```bash
